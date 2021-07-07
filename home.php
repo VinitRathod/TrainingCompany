@@ -69,7 +69,7 @@ if($email != false && $password != false){
     <h1>Welcome <?php echo $fetch_info['name'] ?></h1>
     <?php
     $id = $fetch_info['id'];
-    $sql = 'SELECT course,amount,payment_id,receipt,created_at from payment where U_id = "$id"';
+    $sql = "SELECT course,amount,payment_id,receipt,created_at from payment where U_id = '$id'";
     $result = mysqli_query($con, $sql);
     if(mysqli_num_rows($result) > 0){
         while($row = mysqli_fetch_assoc($result)){
