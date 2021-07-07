@@ -397,7 +397,7 @@
           <div class="col-7 text-center">
             <button class="customPrevBtn btn btn-primary m-1">Prev</button>
             <button class="customNextBtn btn btn-primary m-1">Next</button>
-            <a href="allCourses.html"><button class="customNextBtn btn btn-primary m-1" >All Course</button></a>
+            <a href="allCourses.php"><button class="customNextBtn btn btn-primary m-1" >All Course</button></a>
           </div>
         </div>
       </div>
