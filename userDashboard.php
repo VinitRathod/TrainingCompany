@@ -1,3 +1,27 @@
+<?php require_once "controllerUserData.php";
+include "connection.php";?>
+<?php
+$email = $_SESSION['email'];
+$password = $_SESSION['password'];
+if($email != false && $password != false){
+    $sql = "SELECT * FROM usertable WHERE email = '$email'";
+    $run_Sql = mysqli_query($con, $sql);
+    if($run_Sql){
+        $fetch_info = mysqli_fetch_assoc($run_Sql);
+        $status = $fetch_info['status'];
+        $code = $fetch_info['code'];
+        if($status == "verified"){
+            if($code != 0){
+                header('Location: reset-code.php');
+            }
+        }else{
+            header('Location: user-otp.php');
+        }
+    }
+}else{
+    header('Location: login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -2065,7 +2089,9 @@ p {
                 </div>
                 <button type="button" style="margin-left: 10px; text-align: center;" class="btn btn-info btn-lg">
                 <div class="media-body ml-2 d-none d-lg-block">
-                  <span class="mb-0 text-sm  font-weight-bold">LogOut</span>
+                    <a href="logout-user.php">
+                        <span class="mb-0 text-sm  font-weight-bold">LogOut</span>
+                    </a>
                 </div>
               </div>
             </a>
@@ -2090,7 +2116,7 @@ p {
                 <span>Support</span>
               </a>
               <div class="dropdown-divider"></div>
-              <a href="" class="dropdown-item">
+              <a href="logout-user.php" class="dropdown-item">
                 <i class="ni ni-user-run"></i>
                 <span>Logout</span>
               </a>
@@ -2141,7 +2167,7 @@ p {
               </div>
               <div class="text-center">
                 <h3>
-                  UserName
+                    <?php echo $fetch_info['name'] ?>
                 </h3>
                 <div class="h5 mt-4">
                   <i class="ni business_briefcase-24 mr-2"></i>Solution Manager - Creative Tim Officer (Profession)
@@ -2171,7 +2197,7 @@ p {
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group focused">
-                <label class="form-control-label" for="input-address">Enrolled Course</label>
+<!--                <label class="form-control-label" for="input-address">Enrolled Course</label>-->
                       </div>
                     </div>
                     </div>
@@ -2183,7 +2209,37 @@ p {
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group focused">
-                        <label class="form-control-label" for="input-address">Payment information</label>
+<!--                        <label class="form-control-label" for="input-address">Payment information</label>-->
+                          <?php
+                          $output = "";
+                          $id = $fetch_info['id'];
+                          $sql = "SELECT course,amount,payment_id,receipt,created_at from payment where U_id = '$id'";
+                          $result = mysqli_query($con, $sql);
+                          if(mysqli_num_rows($result) > 0){
+                              $output .= "<table class='table'>
+                                            <tr>
+                                              <th scope='col'>Course</th>
+                                              <th scope='col'>Amount</th>
+                                              <th scope='col'>Payment ID</th>
+                                              <th scope='col'>Receipt</th>
+                                              <th scope='col'>Created At</th>
+                                            </tr>";
+                              while($row = mysqli_fetch_assoc($result)){
+                                  $output .= "
+                                            <tr>
+                                              <td >".$row['course']."</td>
+                                              <td>".$row['amount']."</td>
+                                              <td>".$row['payment_id']."</td>
+                                              <td>".$row['receipt']."</td>
+                                              <td>".$row['created_at']."</td>
+                                            </tr>";
+                              }
+                              $output .= "</table>";
+                              echo $output;
+                          }else{
+                              echo "No Payment Done";
+                          }
+                          ?>
                       </div>
                     </div>
                   </div>
