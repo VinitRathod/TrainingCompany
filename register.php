@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION["loggedin"]) || $_SESSION['loggedin']==false)
+{
+    header("location: login.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -92,31 +99,156 @@
                       <h2>Register Yourself Now!</h2>
                       <div class="container" id="container">
                         <div class="form-container sign-up-container">
-                          <form action="#">
-                            <h1>Payment Information</h1>  
-                
-                              <!-- DropDown Start -->
+                            <?php
 
+                                require('config.php');
+                                require('razorpay-php/Razorpay.php');
+//                                session_start();
 
-                             <!-- DropDown End -->
+                                // Create the Razorpay Order
 
-                              <!-- <input type="text" placeholder="Enter City" />
-                             <input type="text" placeholder="Enter State" />
-                              <input type="tel" placeholder="Amount in INR" />    -->
+                                use Razorpay\Api\Api;
+                                if(isset($_POST['register'])) {
+                                    $name = $_POST['username'];
+                                    $phone = $_POST['number'];
+                                    $email = $_POST['email'];
+                                    $course = $_POST['course'];
+                                    $address = $_POST['address'];
+                                    $price = $_POST['amount'];
+                                    // $fourRandomDigit = mt_rand(1000,9999);
 
-                              <input type="button" onclick="window.location.href='pay.html';" value="Pay Now" style="color: white; background-color: #7971ea;               border-radius: 20px; border: 1px solid #7971ea; font-size: 12px; font-weight: bold; padding: 12px 45px; letter-spacing: 1px;              text-transform: uppercase; transition: transform 80ms ease-in; width: 50%;"  />
+                                    $_SESSION['name'] = $name;
+                                    $_SESSION['email'] = $email;
+                                    $_SESSION['contact'] = $phone;
+                                    $_SESSION['address'] = $address;
+                                    $_SESSION['course'] = $course;
+                                    $_SESSION['price'] = $price;
 
-                                <!-- <button class="customNextBtn btn btn-primary m-1"><a href="pay.html">Pay Now</a></button> -->
-                          </form>
+                                    $api = new Api($keyId, $keySecret);
+                                    $receipt = uniqid('txn_');
+
+                                    date_default_timezone_set('Asia/Kolkata');
+                                    $date = date('d-m-y h:i:s');
+
+                                    //
+                                    // We create an razorpay order using orders api
+                                    // Docs: https://docs.razorpay.com/docs/orders
+                                    //
+                                    $orderData = [
+                                        'receipt' => $receipt,
+                                        'amount' => $price * 100, // 2000 rupees in paise
+                                        'currency' => 'INR',
+                                        'payment_capture' => 1 // auto capture
+                                    ];
+
+                                    $_SESSION['receipt'] = $receipt;
+
+                                    $razorpayOrder = $api->order->create($orderData);
+
+                                    $razorpayOrderId = $razorpayOrder['id'];
+
+                                    $_SESSION['razorpay_order_id'] = $razorpayOrderId;
+
+                                    $displayAmount = $amount = $orderData['amount'];
+
+                                    if ($displayCurrency !== 'INR') {
+                                        $url = "https://api.fixer.io/latest?symbols=$displayCurrency&base=INR";
+                                        $exchange = json_decode(file_get_contents($url), true);
+
+                                        $displayAmount = $exchange['rates'][$displayCurrency] * $amount / 100;
+                                    }
+
+                                    $checkout = 'automatic';
+
+                                    if (isset($_GET['checkout']) and in_array($_GET['checkout'], ['automatic', 'manual'], true)) {
+                                        $checkout = $_GET['checkout'];
+                                    }
+
+                                    $data = [
+                                        "key" => $keyId,
+                                        "amount" => $amount,
+                                        "name" => "Training Company App",
+                                        "description" => $course,
+                                        "image" => "https://s29.postimg.org/r6dj1g85z/daft_punk.jpg",
+                                        "order_id" => $razorpayOrderId,
+                                        "prefill" => [
+                                            "name" => $name,
+                                            "email" => $email,
+                                            "contact" => $phone,
+                                        ],
+                                        "notes" => [
+                                            "address" => "Dummy Address",
+                                            "merchant_order_id" => "12312321",
+                                        ],
+                                        "theme" => [
+                                            "color" => "#F37254"
+                                        ]
+                                    ];
+
+                                    if ($displayCurrency !== 'INR') {
+                                        $data['display_currency'] = $displayCurrency;
+                                        $data['display_amount'] = $displayAmount;
+                                    }
+
+                                    // $paymentId = $_POST['razorpay_payment_id'];
+
+                                    // $sql = "INSERT INTO payment(name,email,contact,address,course,amount,currency,order_id,receipt,created_at)
+                                    //         VALUES('$name','$email','$phone','$address','$course','$price','INR','$razorpayOrderId','$receipt','$date')";
+                                    // if($db->query($sql)){
+                                    //     $inserted = "Values Inserted in the Database";
+                                    //     $_SESSION['inserted'] = $inserted;
+                                    // }
+
+                                    $json = json_encode($data);
+
+                                    require("{$checkout}.php");
+                                }
+                            ?>
+                            <form action="verify.php" method="POST">
+                                <script
+                                        src="https://checkout.razorpay.com/v1/checkout.js"
+                                        data-key="<?php echo $data['key']?>"
+                                        data-amount="<?php echo $data['amount']?>"
+                                        data-currency="INR"
+                                        data-name="<?php echo $data['name']?>"
+                                        data-image="<?php echo $data['image']?>"
+                                        data-description="<?php echo $data['description']?>"
+                                        data-prefill.name="<?php echo $data['prefill']['name']?>"
+                                        data-prefill.email="<?php echo $data['prefill']['email']?>"
+                                        data-prefill.contact="<?php echo $data['prefill']['contact']?>"
+                                        data-order_id="<?php echo $data['order_id']?>"
+                                    <?php if ($displayCurrency !== 'INR') { ?> data-display_amount="<?php echo $data['display_amount']?>" <?php } ?>
+                                    <?php if ($displayCurrency !== 'INR') { ?> data-display_currency="<?php echo $data['display_currency']?>" <?php } ?>
+                                >
+                                </script>
+                                <!-- Any extra fields to be submitted with the form but not sent to Razorpay -->
+<!--                                <input type="hidden" name="shopping_order_id" value="3456">-->
+                            </form>
+<!--                          <form action="automatic.php">-->
+<!--                            <h1>Payment Information</h1>  -->
+<!--                -->
+<!--                              <!-- DropDown Start -->-->
+<!---->
+<!---->
+<!--                             <!-- DropDown End -->-->
+<!---->
+<!--                              <!-- <input type="text" placeholder="Enter City" />-->
+<!--                             <input type="text" placeholder="Enter State" />-->
+<!--                              <input type="tel" placeholder="Amount in INR" />    -->-->
+<!---->
+<!--                              <input type="submit" onclick="window.location.href='automatic.php';" value="Pay Now" style="color: white; background-color: #7971ea;               border-radius: 20px; border: 1px solid #7971ea; font-size: 12px; font-weight: bold; padding: 12px 45px; letter-spacing: 1px;              text-transform: uppercase; transition: transform 80ms ease-in; width: 50%;"  />-->
+<!---->
+<!--                                <!-- <button class="customNextBtn btn btn-primary m-1"><a href="pay.html">Pay Now</a></button> -->-->
+<!--                          </form>-->
                         </div>
                         <div class="form-container sign-in-container">
-                          <form action="#">
+                          <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
                               <h1>Register</h1>
-                              <input type="text" placeholder="Name" />
-                              <input type="email" placeholder="Email" />
-                              <input type="tel" placeholder="Mobile Number" pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" />
-                              <input type="text" placeholder="Address" />
-                              <input type="tel" placeholder="Amount in INR" />
+                              <input type="text" name="username" placeholder="Name" required />
+                              <input type="email" name="email" placeholder="Email" required />
+                              <input type="tel" name="number" placeholder="Mobile Number" required pattern="[0-9]{3}-[0-9]{2}-[0-9]{3}" />
+                              <input type="text" name="address" placeholder="Address" required/>
+                              <input type="tel" name="amount" placeholder="Amount in INR" required/>
                               <!-- <button>Register</button> -->
                           </form>
                       </div>
@@ -130,7 +262,7 @@
                               <div class="overlay-panel overlay-right">
                                   <h1>Hello, Friend!</h1>
                                   <p>Enter your payment details and start journey with us</p>
-                                  <button class="ghost" id="signUp">Register</button>
+                                  <button type="submit" name="register" class="ghost" id="signUp">Register</button>
                               </div>
                           </div>
                       </div>
