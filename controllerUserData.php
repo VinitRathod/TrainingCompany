@@ -73,7 +73,7 @@ if(isset($_POST['check'])){
             $_SESSION['name'] = $name;
             $_SESSION['email'] = $email;
             $_SESSION['loggedin']=true;
-            header('location: home.php');
+            header('location: userDashboard.php');
             exit();
         }else{
             $errors['otp-error'] = "Failed while updating code!";
@@ -106,7 +106,7 @@ if(isset($_POST['login'])){
                     header('location: admin.php');
                 }
                 else{
-                    header('location: home.php');
+                    header('location: userDashboard.php');
                 }
 
 

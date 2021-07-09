@@ -1171,6 +1171,7 @@ h1, h2, h3, h4, h5,
 
 .sign h1 {
 	font-weight: bold;
+  font-size: 32px;
 	margin: 0;
 }
 
@@ -1200,8 +1201,9 @@ h1, h2, h3, h4, h5,
 	background-color: #7971ea;
 	color: #FFFFFF;
 	font-size: 12px;
+  height: 40px;
 	font-weight: bold;
-	padding: 12px 45px;
+	padding: 10px 40px;
 	letter-spacing: 1px;
 	text-transform: uppercase;
 	transition: transform 80ms ease-in;
@@ -1236,7 +1238,8 @@ h1, h2, h3, h4, h5,
 	background-color: #eee;
 	border: none;
 	padding: 12px 15px;
-	margin: 8px 0;
+	margin: 6px 0;
+  height: 40px;
 	width: 100%;
 }
 
@@ -1247,9 +1250,9 @@ h1, h2, h3, h4, h5,
 			0 10px 10px rgba(0,0,0,0.22);
 	position: relative;
 	overflow: hidden;
-	width: 768px;
+	width: 864px;
 	max-width: 100%;
-	min-height: 480px;
+	min-height: 540px;
 }
 
 .sign .form-container {
