@@ -100,16 +100,17 @@
 
     
 
-    <div class="intro-section" id="courses-section">
+    <div class="intro-section single-cover" id="courses-section">
 
-        <div class="slide-1" style="background-image: url('images/hero_1.jpg');" data-stellar-background-ratio="0.5">
+        <div class="slide-1" style="background-image: url('https://mk0omswamil19tswp4ab.kinstacdn.com/wp-content/uploads/2021/06/BC8D7CD6-BF43-4818-9B65-C9B53D53F358.gif');" data-stellar-background-ratio="0.5">
           <div class="container">
             <div class="row align-items-center">
               <div class="col-12">
-
-                
-                  
-               
+              <div class="row justify-content-center align-items-center text-center">
+                <div class="col-lg-6">
+                  <h1 data-aos="fade-up" data-aos-delay="0" style="Color:white;">All Courses!</h1>
+                </div>
+              </div>  
               </div>
             </div>
             </div>
@@ -118,19 +119,10 @@
           </div>
         </div>
       </div>
-
-      <div class="site-section courses-title" id="courses-section">
-        <div class="container">
-          <div class="row mb-5 justify-content-center">
-            <div class="col-lg-7 text-center" data-aos="fade-up" data-aos-delay="">
-              <h2 class="section-title">All Courses</h2>
-            </div>
-        </div>
-      </div>
     </div>
 
     <!-- Courses start-->
-    <div class="site-section courses-entry-wrap"  data-aos="fade-up" data-aos-delay="100" >
+    <div class="site-section bg-light" id="courses-section" >
       <div class="container" >
         <!-- <div class="row"> -->
 

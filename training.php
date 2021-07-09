@@ -90,15 +90,17 @@
 
     </header>
     
-    <div class="intro-section" id="teachers-section">
+    <div class="intro-section single-cover"  id="teachers-section">
 
-        <div class="slide-1" style="background-image: url('images/hero_1.jpg');" data-stellar-background-ratio="0.5">
+        <div class="slide-1" style="background-image: url('https://cloud.headwayapp.co/changelogs_images/images/big/000/054/822-3e06f50d1face4f9765b5649c9779945d811a741.gif');" data-stellar-background-ratio="0.5">
           <div class="container">
             <div class="row align-items-center">
               <div class="col-12">
-                <div class="sign">
-                 
+              <div class="row justify-content-center align-items-center text-center">
+                <div class="col-lg-6">
+                  <h1 data-aos="fade-up" data-aos-delay="0" style="Color:white;">Corporate Training Form!</h1>
                 </div>
+              </div>
               </div>
             </div>
           </div>
@@ -106,30 +108,14 @@
     </div>
       <!-- </div> -->
 
-      <div class="site-section courses-title" id="#teachers-section">
-      <div class="container">
-        <div class="row mb-5 justify-content-center">
-          <div class="col-lg-7 text-center" data-aos="fade-up" data-aos-delay="">
-            <!-- <h2 class="section-title">Courses</h2> -->
-            <h2 class="section-title">Training Calendar</h2>
-            <!-- <p class="mb-5" style="color: white;">The best we promise the best we are !</p> -->
-            <p style="color: white;">We aim to make studying SIMPLE, EASY and ACCESSIBLE to EVERYONE thus we collected the BEST COURSES in the world in one place.</p>
-          </div>
-        </div>
-      </div>
-    </div>
- 
 
 
 
-    <div class="site-section" id="#teachers-section" style="background-color: #e6e6e6;">
+    <div class="site-section bg-light" id="#teachers-section">
       <div class="container">
 
-        <div class="row mb-5 justify-content-center">
-          <div class="col-lg-7 mb-5 text-center"  data-aos="fade-up" data-aos-delay="">
-            <!-- <h2 class="section-title">Our Teachers</h2>
-            <p class="mb-5">The best we promise the best we are !</p> -->
-
+        <div class="row justify-content-center">
+          <div class="col-lg-7 mb-5 text-center">
               
             <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600' rel='stylesheet' type='text/css'>
             <link href="//netdna.bootstrapcdn.com/font-awesome/3.1.1/css/font-awesome.css" rel="stylesheet">

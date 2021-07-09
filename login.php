@@ -77,7 +77,7 @@
     
     <div class="intro-section" id="login-section">
 
-        <div class="slide-1" style="background-image: url('images/hero_1.jpg');" data-stellar-background-ratio="0.5">
+        <div class="slide-1" style="background-image: url('https://shrm-res.cloudinary.com/image/upload/c_crop,h_1192,w_2121,x_0,y_75/w_auto:100,w_1200,q_35,f_auto/v1/Employee%20Relations/iStock-589124340_wdzo3j.jpg');" data-stellar-background-ratio="0.5">
           <div class="container">
             <div class="row align-items-center">
               <div class="col-12">
