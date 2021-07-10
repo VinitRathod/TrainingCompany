@@ -1,12 +1,7 @@
 <?php
 
-<<<<<<< HEAD
-//$keyId = 'rzp_test_a5baidBtUn5iZN';
-//$keySecret = 'P1Fmhk5aa8qXlG8mhXznAtaX';
-=======
 $keyId = 'rzp_test_a5baidBtUn5iZN';
 $keySecret = 'P1Fmhk5aa8qXlG8mhXznAtaX';
->>>>>>> origin/updatingLogin/SignUp
 $displayCurrency = 'INR';
 
 $servername = 'localhost';
