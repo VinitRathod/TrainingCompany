@@ -101,6 +101,31 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION['loggedin']==false)
                         <div class="form-container sign-up-container">
                             <?php
 
+<<<<<<< HEAD
+                                require('config.php');
+                                require('razorpay-php/Razorpay.php');
+//                                session_start();
+
+                                // Create the Razorpay Order
+
+                                use Razorpay\Api\Api;
+                                if(isset($_POST['register'])) {
+                                    $name = $_POST['username'];
+                                    $phone = $_POST['number'];
+                                    $email = $_POST['email'];
+                                    $course = $_POST['course'];
+                                    $address = $_POST['address'];
+                                    $price = $_POST['amount'];
+                                    // $fourRandomDigit = mt_rand(1000,9999);
+
+                                    $_SESSION['name'] = $name;
+                                    $_SESSION['email'] = $email;
+                                    $_SESSION['contact'] = $phone;
+                                    $_SESSION['address'] = $address;
+                                    $_SESSION['course'] = $course;
+                                    $_SESSION['price'] = $price;
+
+=======
                                 $keyId = 'rzp_test_BVjH8JxLHTWjqH';
                                 $keySecret = '9qhpMA8guRAC9pzg4dGf6gpv';
 
@@ -127,6 +152,7 @@ if(!isset($_SESSION["loggedin"]) || $_SESSION['loggedin']==false)
                                     $_SESSION['course'] = $course;
                                     $_SESSION['price'] = $price;
 
+>>>>>>> 6421f0eecc1114eb9a2a9dda2d188c15e148d6ce
                                     $api = new Api($keyId, $keySecret);
                                     $receipt = uniqid('txn_');
 
